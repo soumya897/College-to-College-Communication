@@ -10,7 +10,6 @@ import { connectDB } from "./lib/db.js";
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import { app, server } from "./lib/socket.js";
-import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -37,15 +36,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  
-}).then(() => {
-  server.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
-  });
-}).catch((error) => {
-  console.log("MongoDB connection error:", error);
-}
-);
+server.listen(PORT, () => {
+  console.log("server is running on PORT:" + PORT);
+  connectDB();
+});
